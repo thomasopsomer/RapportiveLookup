@@ -24,10 +24,6 @@ def main(input_path, output_path, header=True, email_position=2):
         for row in email_csv:
             emails.append(row[email_position])
 
-    # number of lines in output file
-    with open(output_path, "rw") as csvfile:
-        N = len(csvfile.readlines())
-
     # Init rapportive client
     curl_string = None
     token = None
@@ -36,11 +32,11 @@ def main(input_path, output_path, header=True, email_position=2):
     client = RapportiveClient(token=token, curl_string=curl_string)
 
     # process emails and write result to csv output file
-    with open(output_path, "a+") as csvfile:
+    with open(output_path, "w") as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=COLUMNS)
-        if N == 0:
-            writer.writeheader()
-
+        # add header
+        writer.writeheader()
+        # process emails
         for email in emails:
             try:
                 r = client.get_info(email)

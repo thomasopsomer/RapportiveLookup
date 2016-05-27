@@ -40,7 +40,7 @@ def main(input_path, output_path, header=True, email_position=2):
         for email in emails:
             try:
                 r = client.get_info(email)
-            except:
+            except ValueError:
                 curl_string = raw_input('Enter new curl statement {} : ')
                 token = get_token(curl_string)
                 client.change_token(token)

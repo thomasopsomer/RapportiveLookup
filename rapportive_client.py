@@ -109,9 +109,9 @@ class RapportiveClient(object):
                         (r.status_code, r_json["message"]))
             raw_info = 401
         elif r.status_code == 403:
-            logger.info("Status code: %s - Too much call - %s" %
-                        (r.status_code, r_json["message"]))
-            raw_info = 403
+            logger.info("Status code: %s - Email: %s - No access - %s" %
+                        (r.status_code, email, r_json["message"]))
+            raw_info = {}
         elif r.status_code == 404:
             logger.info("Status code: %s - Email: %s not found" % (r.status_code, email))
             raw_info = {}
@@ -171,7 +171,7 @@ class RapportiveClient(object):
         Get and parse information back from the linkedin API
         """
         res_tmp = self.get_raw_info(email)
-        if res_tmp in [401, 403]:
+        if res_tmp in [401]:
             raise ValueError("Need a new token")
         else:
             res = {}

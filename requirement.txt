@@ -1,0 +1,5 @@
+begins==0.9
+funcsigs==1.0.2
+requests==2.10.0
+unicodecsv==0.14.1
+wheel==0.24.0

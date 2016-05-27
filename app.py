@@ -9,7 +9,12 @@ import begin
 @begin.start
 @begin.convert(email_position=int, header=bool)
 def main(input_path, output_path, header=True, email_position=2):
-    """ """
+    """
+    `input_path` :: path to your csv of emails to process
+    `output_path` :: path to save results
+    `header` :: flag to signal if input file has a header
+    `email_position` :: index of the column containing emails
+    """
     # get list of email to process
     with open(input_path, "r") as csvfile:
         emails = []
@@ -20,7 +25,7 @@ def main(input_path, output_path, header=True, email_position=2):
             emails.append(row[email_position])
 
     # number of lines in output file
-    with open(output_path, "r") as csvfile:
+    with open(output_path, "rw") as csvfile:
         N = len(csvfile.readlines())
 
     # Init rapportive client

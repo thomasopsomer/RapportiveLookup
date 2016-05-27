@@ -87,7 +87,7 @@ class RapportiveClient(object):
             - 401: Unauthorized (token expired)
             - 403: Too much call for this token
             - 404: No result found for this email
-        if 401 or 403 : need to change token 
+        if 401 or 403 : need to change token
         """
         URL = """https://api.linkedin.com/v1/people/email={}:(first-name,last-name,headline,location,distance,positions,twitter-accounts,im-accounts,phone-numbers,member-url-resources,picture-urls::(original),site-standard-profile-request,public-profile-url)""" \
             .format(email.replace("@", "%40"))

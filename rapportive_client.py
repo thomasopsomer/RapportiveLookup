@@ -111,8 +111,8 @@ class RapportiveClient(object):
         elif r.status_code == 403:
             logger.info("Status code: %s - Email: %s - No access - %s" %
                         (r.status_code, email, r_json["message"]))
-            # if "" in r_json["message"]:
-                # raise ExpiredTokenError("Need a new token")
+            if "Throttle limit for calls to this resource is reached" in r_json["message"]:
+                raise ExpiredTokenError("Need a new token")
             raw_info = {}
         elif r.status_code == 404:
             logger.info("Status code: %s - Email: %s not found" % (r.status_code, email))

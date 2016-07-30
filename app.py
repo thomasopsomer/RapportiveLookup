@@ -43,6 +43,7 @@ def main(input_path, output_path, header=True, email_position=2):
             try:
                 r = client.get_info(email)
             except ExpiredTokenError:
+                # curl_string = raw_input('Enter new curl statement {} : ')
                 curl_string = raw_input('Enter new curl statement {} : ')
                 token = get_token(curl_string)
                 client.change_token(token)

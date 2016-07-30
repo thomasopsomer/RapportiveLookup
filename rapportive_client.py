@@ -111,6 +111,8 @@ class RapportiveClient(object):
         elif r.status_code == 403:
             logger.info("Status code: %s - Email: %s - No access - %s" %
                         (r.status_code, email, r_json["message"]))
+            if "" in r_json["message"]:
+                raise ExpiredTokenError("Need a new token")
             raw_info = {}
         elif r.status_code == 404:
             logger.info("Status code: %s - Email: %s not found" % (r.status_code, email))
@@ -172,7 +174,7 @@ class RapportiveClient(object):
         """
         res_tmp = self.get_raw_info(email)
         if res_tmp in [401]:
-            raise ValueError("Need a new token")
+            raise ExpiredTokenError("Need a new token")
         else:
             res = {}
             res = self.parse_raw_info(res_tmp)
@@ -227,4 +229,9 @@ def deaccent(text):
     norm = unicodedata.normalize("NFD", text)
     result = (u'').join(ch for ch in norm if unicodedata.category(ch) != 'Mn')
     return unicodedata.normalize("NFC", result)
+
+
+# ### Exception
+class ExpiredTokenError(Exception):
+    pass
 

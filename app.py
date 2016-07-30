@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 # @Author: thomasopsomer
 
-from rapportive_client import RapportiveClient, COLUMNS, get_token
+from rapportive_client import RapportiveClient, COLUMNS, get_token, ExpiredTokenError
 import unicodecsv as csv
+# import csv
 import begin
 
 
@@ -16,12 +17,13 @@ def main(input_path, output_path, header=True, email_position=2):
     `email_position` :: index of the column containing emails
     """
     # get list of email to process
-    with open(input_path, "r") as csvfile:
+    with open(input_path, "rU") as csvfile:
         emails = []
-        email_csv = csv.reader(csvfile, delimiter=',', quotechar='"')
+        email_csv = csv.reader(csvfile, delimiter=';', quotechar='"', dialect=csv.excel_tab)
         if header:
             email_csv.next()
         for row in email_csv:
+            # print row
             emails.append(row[email_position])
 
     # Init rapportive client
@@ -40,7 +42,7 @@ def main(input_path, output_path, header=True, email_position=2):
         for email in emails:
             try:
                 r = client.get_info(email)
-            except ValueError:
+            except ExpiredTokenError:
                 curl_string = raw_input('Enter new curl statement {} : ')
                 token = get_token(curl_string)
                 client.change_token(token)

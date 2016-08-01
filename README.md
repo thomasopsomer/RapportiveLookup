@@ -4,6 +4,8 @@ RapportiveLookup
 
 ## 1. Description
 
+Ask me for the tip
+
 ## 2. Usage
 
 - Clone the repository :)

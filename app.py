@@ -9,7 +9,7 @@ import begin
 
 @begin.start
 @begin.convert(email_position=int, header=bool)
-def main(input_path, output_path, header=True, email_position=2):
+def main(input_path, output_path, header=True, email_position=0):
     """
     `input_path` :: path to your csv of emails to process
     `output_path` :: path to save results

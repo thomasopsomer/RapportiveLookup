@@ -9,7 +9,7 @@ import begin
 
 @begin.start
 @begin.convert(email_position=int, header=bool)
-def main(input_path, output_path, header=True, email_position=0):
+def main(input_path, output_path, header=True, email_position=0, delimiter=";"):
     """
     `input_path` :: path to your csv of emails to process
     `output_path` :: path to save results
@@ -19,7 +19,8 @@ def main(input_path, output_path, header=True, email_position=0):
     # get list of email to process
     with open(input_path, "rU") as csvfile:
         emails = []
-        email_csv = csv.reader(csvfile, delimiter=';', quotechar='"', dialect=csv.excel_tab)
+        email_csv = csv.reader(csvfile, delimiter=delimiter, quotechar='"',
+                               dialect=csv.excel_tab)
         if header:
             email_csv.next()
         for row in email_csv:
